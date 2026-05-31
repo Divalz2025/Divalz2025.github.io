@@ -1,103 +1,514 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Qwitcher+Grypen:wght@400;700&display=swap" rel="stylesheet">
+    <title>Divalz Imagen 4k v1.0 - Súper Resolución</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body 
-{
-    background-color: aquamarine;
-}
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --bg: #0F172A;
+            --surface: #1E293B;
+            --text: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border: #334155;
+            --success: #10B981;
+        }
 
-.banner
-{
-    width: auto;
-    height: 200px;
-    background-color:#ffafcc;
-    color:white;
-    font-family: 'Trebuchet MS', sans-serif;
-    text-align: center;
-    align-content: center;
-    border-radius: 20px;
-}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
 
-.menu 
-{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-}
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-.btn
-{
-    width: 100px;
-    height: 30px;
-    background-color: white;
-    border-radius: 10px;
-    margin: 10px;
-    font-size: 20px;
-    padding: 12px;
-    text-decoration: none;
-    color: darkmagenta;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    text-align: center;
+        /* Banner Superior */
+        .banner {
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            color: #ffffff;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-transform: uppercase;
+        }
 
-}
-.btn:hover 
-{
-    color: aquamarine;
-    border: 3px solid aqua;
-}
+        /* Contenedor Principal */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1.5rem;
+        }
 
-footer 
-{
-    background-color: #ffafcc; 
-    width: 100%;
-    height: min-content;
-    text-align: center;  
-    position: absolute;
-    bottom: 0;
-}
-.qwitcher-grypen-regular {
-  font-family: "Qwitcher Grypen", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
+        .container {
+            background-color: var(--surface);
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 950px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border);
+        }
 
-.qwitcher-grypen-bold {
-  font-family: "Qwitcher Grypen", cursive;
-  font-weight: 700;
-  font-style: normal;
-}
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
 
-h2
-{
-    font-family: "Qwitcher Grypen";
-    font-size: 30px;
-}
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #818CF8, #C084FC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
+        .header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Nueva Estructura Grid de 2 Columnas Perfectas */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Panel Izquierdo (Entrada + Controles abajo) */
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            background-color: rgba(15, 23, 42, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 280px;
+        }
+
+        .upload-area:hover, .upload-area.dragover {
+            border-color: var(--primary);
+            background-color: rgba(79, 70, 229, 0.1);
+        }
+
+        .upload-area input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .preview-img {
+            max-width: 100%;
+            max-height: 240px;
+            border-radius: 8px;
+            display: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            object-fit: contain;
+        }
+
+        .upload-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            background-color: rgba(15, 23, 42, 0.2);
+            padding: 1.2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn:disabled {
+            background-color: var(--border);
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        /* Panel Derecho (Área de Resultados Dinámica) */
+        .right-panel {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            min-height: 435px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(15, 23, 42, 0.2);
+            position: relative;
+        }
+
+        .right-panel.active {
+            border-style: solid;
+            border-color: rgba(129, 138, 248, 0.3);
+            background-color: rgba(30, 41, 59, 0.5);
+        }
+
+        .result-placeholder {
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .result-content {
+            width: 100%;
+            display: none;
+            text-align: center;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+        }
+
+        .result-img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            object-fit: contain;
+        }
+
+        .loader {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .status-msg {
+            font-size: 0.85rem;
+            color: #818CF8;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: rgba(15, 23, 42, 0.6);
+            color: var(--text-muted);
+            text-align: center;
+            padding: 1.2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-top: 1px solid var(--border);
+            letter-spacing: 0.5px;
+        }
+        
+        .footer span {
+            color: #818CF8;
+            font-weight: 600;
+        }
     </style>
-<title>CREACIONES VARIAS DIVAL</title>
 </head>
 <body>
-    
-<div class="banner">
-    <h1>CREACIONES VARIAS DIVALZ</h1>
-    <h2>Creamos por tí</h2>
-</div>
-    <div class="menu">
-        <a href="https://www.instagram.com/divalz_10/" class="btn">Instagram</a>
-        <a href="https://www.facebook.com/beta.vldz" class="btn">Facebook</a>
-        <a href="https://wa.link/ctf881" class="btn">Whatsapp</a>        
+
+    <!-- Banner Superior -->
+    <div class="banner">
+        Divalz Imagen 4k v1.0
     </div>
-<footer>
-    <p>Made with 💙 by Creaciones Varias Divalz © 2025</p>
-   
-</footer>
+
+    <!-- Contenido Principal -->
+    <div class="main-content">
+        <div class="container">
+            <div class="header">
+                <h1>Módulo de Mejora y Escalado IA</h1>
+                <p>Aumenta la resolución sin pixelar. Estructura optimizada de panel doble.</p>
+            </div>
+
+            <div class="grid">
+                
+                <!-- COLUMNA IZQUIERDA: VISTA PREVIA Y CONTROLES DEBAJO -->
+                <div class="left-panel">
+                    <!-- Área de subida / Preview arriba a la izquierda -->
+                    <div class="upload-area" id="dropZone">
+                        <input type="file" id="imageInput" accept="image/png, image/jpeg, image/webp">
+                        <svg id="uploadIcon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <img id="imagePreview" class="preview-img" alt="Vista previa de origen">
+                        <p id="uploadText" class="upload-text">Haz clic o arrastra tu imagen de origen aquí</p>
+                    </div>
+
+                    <!-- Controles agrupados abajo a la izquierda -->
+                    <div class="controls">
+                        <div class="control-group">
+                            <label for="scaleSelect">Nivel de Ampliación</label>
+                            <select id="scaleSelect">
+                                <option value="x2">Multiplicar por 2 (x2)</option>
+                                <option value="x3">Multiplicar por 3 (x3)</option>
+                                <option value="x4">Multiplicar por 4 (x4)</option>
+                            </select>
+                        </div>
+
+                        <button id="processBtn" class="btn" disabled>
+                            <span class="loader" id="loader"></span>
+                            <span id="btnText">Procesar Imagen</span>
+                        </button>
+                        
+                        <div id="statusMessage" class="status-msg"></div>
+                    </div>
+                </div>
+
+                <!-- COLUMNA DERECHA: RESULTADO EN TIEMPO REAL -->
+                <div class="right-panel" id="rightPanel">
+                    <div class="result-placeholder" id="resultPlaceholder">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5" style="margin-bottom: 1rem;">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                        <p>La imagen mejorada en alta resolución aparecerá en este panel derecho al procesar.</p>
+                    </div>
+
+                    <div class="result-content" id="resultContent">
+                        <h3 style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.95rem; text-transform: uppercase;">Resultado IA Finalizado</h3>
+                        <img id="resultImage" class="result-img" alt="Resultado escalado">
+                        <a id="downloadBtn" class="btn" style="text-decoration: none; background-color: var(--success);" download="divalz-imagen-4k.png">
+                            Descargar Imagen 4K
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Inferior -->
+    <div class="footer">
+        By: <span>Divalz Creaciones</span>
+    </div>
+
+    <!-- Script de Comunicación Inteligente con la API -->
+    <script type="module">
+        import { client } from "https://cdn.jsdelivr.net/npm/@gradio/client/dist/index.min.js";
+
+        // Mapeo de elementos
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const uploadIcon = document.getElementById('uploadIcon');
+        const uploadText = document.getElementById('uploadText');
+        const dropZone = document.getElementById('dropZone');
+        const processBtn = document.getElementById('processBtn');
+        const btnText = document.getElementById('btnText');
+        const loader = document.getElementById('loader');
+        const scaleSelect = document.getElementById('scaleSelect');
+        const rightPanel = document.getElementById('rightPanel');
+        const resultPlaceholder = document.getElementById('resultPlaceholder');
+        const resultContent = document.getElementById('resultContent');
+        const resultImage = document.getElementById('resultImage');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const statusMessage = document.getElementById('statusMessage');
+
+        let currentFile = null;
+
+        // Cargar imagen de origen en el panel izquierdo
+        imageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                currentFile = file;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    uploadIcon.style.display = 'none';
+                    uploadText.style.display = 'none';
+                    processBtn.disabled = false;
+                    
+                    // Resetear estado del panel de resultados previo
+                    resultPlaceholder.style.display = 'block';
+                    resultContent.style.display = 'none';
+                    rightPanel.classList.remove('active');
+                    statusMessage.textContent = "";
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Drag and drop funcional
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            if (e.dataTransfer.files.length) {
+                imageInput.files = e.dataTransfer.files;
+                imageInput.dispatchEvent(new Event('change'));
+            }
+        });
+
+        // Procesamiento e inspección de API redundante para evitar fallos
+        processBtn.addEventListener('click', async () => {
+            if (!currentFile) return;
+
+            // Bloqueo visual e inicio de carga
+            processBtn.disabled = true;
+            btnText.textContent = 'Estableciendo conexión...';
+            loader.style.display = 'inline-block';
+            statusMessage.style.color = '#818CF8';
+            statusMessage.textContent = "Conectando con el clúster de Hugging Face...";
+            
+            resultPlaceholder.style.display = 'block';
+            resultContent.style.display = 'none';
+
+            try {
+                // Conexión al cliente API de Gradio
+                const app = await client("Deddy/Free-Img-EnhanceUpscaler-PRO");
+                
+                statusMessage.textContent = "Servidor listo. Transmitiendo binarios y procesando algoritmos de súper-resolución...";
+                btnText.textContent = 'Procesando IA...';
+
+                // Intentamos ejecutar la consulta con el endpoint estándar predecible
+                // Nota de seguridad: Manejamos el envío del objeto File nativo compatible con Gradio API
+                const result = await app.predict("/predict", [
+                    currentFile,           
+                    scaleSelect.value      
+                ]);
+
+                // Validación exhaustiva de la respuesta de datos devuelta por la API
+                if (result && result.data && result.data[0]) {
+                    const finalUrl = result.data[0].url;
+                    
+                    // Inyección de resultados en el panel derecho
+                    resultImage.src = finalUrl;
+                    downloadBtn.href = finalUrl;
+                    
+                    resultPlaceholder.style.display = 'none';
+                    resultContent.style.display = 'flex';
+                    rightPanel.classList.add('active');
+                    
+                    statusMessage.style.color = '#10B981';
+                    statusMessage.textContent = "¡Mejora completada con éxito! Imagen escalada disponible.";
+                } else {
+                    // Fallback secundario si la estructura cambia levemente
+                    if (result && result.data && typeof result.data[0] === 'string') {
+                        resultImage.src = result.data[0];
+                        downloadBtn.href = result.data[0];
+                        resultPlaceholder.style.display = 'none';
+                        resultContent.style.display = 'flex';
+                        rightPanel.classList.add('active');
+                        statusMessage.textContent = "¡Procesado exitosamente!";
+                    } else {
+                        throw new Error("El servidor procesó la imagen pero devolvió un formato desconocido.");
+                    }
+                }
+
+            } catch (error) {
+                console.error("Error detallado de la API:", error);
+                statusMessage.style.color = '#ef4444';
+                
+                // Explicación amigable del error del servidor
+                if (error.message.includes("fetch") || error.message.includes("CORS")) {
+                    statusMessage.textContent = "Error de origen: Asegúrate de estar ejecutando este archivo mediante un Servidor Local (como Live Server en VS Code).";
+                } else {
+                    statusMessage.textContent = `Aviso del Servidor: El clúster remoto está ocupado o en mantenimiento temporal. Intenta de nuevo en unos momentos.`;
+                }
+            } finally {
+                // Liberar botón
+                processBtn.disabled = false;
+                btnText.textContent = 'Procesar Imagen';
+                loader.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
